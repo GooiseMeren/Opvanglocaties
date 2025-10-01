@@ -1,0 +1,16 @@
+<environmentvariabledefinition schemaname="new_OpvangLocatiesBestandenSite">
+  <apiid>/providers/microsoft.powerapps/apis/shared_sharepointonline</apiid>
+  <defaultvalue>https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_Prod_Documenten_d8tUHRFNiWQwJi4EwUuWTpM39dgkhL</defaultvalue>
+  <description default="OpvangLocatiesBestandenSite">
+    <label description="OpvangLocatiesBestandenSite" languagecode="1043" />
+  </description>
+  <displayname default="OpvangLocatiesBestandenSite">
+    <label description="OpvangLocatiesBestandenSite" languagecode="1043" />
+  </displayname>
+  <introducedversion>1.0.0.23</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <parameterkey>dataset</parameterkey>
+  <secretstore>0</secretstore>
+  <type>100000004</type>
+</environmentvariabledefinition>

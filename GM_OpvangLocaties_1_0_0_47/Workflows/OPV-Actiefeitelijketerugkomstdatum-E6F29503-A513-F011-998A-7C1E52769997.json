@@ -1,0 +1,164 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "api": {
+          "name": "shared_sharepointonline"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedsharepointonline_7cf8b"
+        },
+        "runtimeSource": "embedded"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "OpvangLocatiesSite (new_OpvangLocatiesSite)": {
+          "defaultValue": "https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_ACC_zspQYrr8MYeeVtURZe9i2McjFcRQvE",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesSite"
+          }
+        },
+        "OpvangLocatiesLijstCaseload (new_OpvangLocatiesLijstCaseload)": {
+          "defaultValue": "f8af2654-c608-410a-a94e-025832ecf605",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesLijstCaseload"
+          }
+        },
+        "OpvangLocatiesLijstActions (new_OpvangLocatiesLijstActies)": {
+          "defaultValue": "1394b78e-0136-4c60-bddd-9512e9dbd0ba",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesLijstActies"
+          }
+        },
+        "OpvangLocatiesLijstVerlof (new_OpvangLocatiesLijstVerlof)": {
+          "defaultValue": "f00f3920-394f-478c-be42-ee1fc7e50716",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesLijstVerlof"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      },
+      "actions": {
+        "Get_items_-_Verlof": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "@parameters('OpvangLocatiesSite (new_OpvangLocatiesSite)')",
+              "table": "@parameters('OpvangLocatiesLijstVerlof (new_OpvangLocatiesLijstVerlof)')",
+              "$filter": "Tot eq '@{addDays(utcNow(),-1,'MM-dd-yyyy')}'"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "operationId": "GetItems",
+              "connectionName": "shared_sharepointonline"
+            }
+          },
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "f5bd484e-f017-4dd4-8a4b-6e647ff37217"
+          }
+        },
+        "Apply_to_each": {
+          "type": "Foreach",
+          "foreach": "@outputs('Get_items_-_Verlof')?['body/value']",
+          "actions": {
+            "Get_items_-_Caseload": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "@parameters('OpvangLocatiesSite (new_OpvangLocatiesSite)')",
+                  "table": "@parameters('OpvangLocatiesLijstCaseload (new_OpvangLocatiesLijstCaseload)')",
+                  "$filter": "ID eq @{int(items('Apply_to_each')?['BewonerID'])}"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "GetItems",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "metadata": {
+                "operationMetadataId": "7a400470-e2d0-4533-ad7b-a38063b9efa4"
+              }
+            },
+            "Create_item_-_Actie_verlof": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "@parameters('OpvangLocatiesSite (new_OpvangLocatiesSite)')",
+                  "table": "@parameters('OpvangLocatiesLijstActions (new_OpvangLocatiesLijstActies)')",
+                  "item/Datum": "@utcNow()",
+                  "item/Status": "Actief",
+                  "item/Soort": "Bewoner",
+                  "item/Onderwerp": "Registratie feitelijke terugkomstdatum verlof",
+                  "item/GMType": "Anders",
+                  "item/MultiChoiceBehandelaar": [
+                    {
+                      "Claims": "@first(outputs('Get_Items_-_Caseload')?['body']?['value'])?['Caseloadhouder/Claims']"
+                    }
+                  ],
+                  "item/Omschrijving": "<p class=\"editor-paragraph\">Graag de feitelijke terugkomstdatum voor deze bewoner registeren in het persoonsdossier.</p>",
+                  "item/Kamernummer": "@first(outputs('Get_Items_-_Caseload')?['body']?['value'])?['Kamernummer']",
+                  "item/BewonerID": "@first(outputs('Get_Items_-_Caseload')?['body']?['value'])?['ID']",
+                  "item/Locatie": "@first(outputs('Get_Items_-_Caseload')?['body']?['value'])?['Locatie']",
+                  "item/IngevoerdDoor": "Systeem",
+                  "item/IngevoerdDoorNaam": "Systeem"
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "PostItem",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "runAfter": {
+                "Get_items_-_Caseload": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "85b6cba3-6d17-4123-b1b5-765aea44de15"
+              }
+            }
+          },
+          "runAfter": {
+            "Get_items_-_Verlof": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "32cf4daa-1d54-418b-a698-e1ddf36c0ff6"
+          }
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

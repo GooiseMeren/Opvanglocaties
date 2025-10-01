@@ -1,0 +1,285 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedsharepointonline_7cf8b"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_office365": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedoffice365_d3d2f"
+        },
+        "api": {
+          "name": "shared_office365"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "OpvangLocatiesSite (new_OpvangLocatiesSite)": {
+          "defaultValue": "https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_ACC_zspQYrr8MYeeVtURZe9i2McjFcRQvE",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesSite"
+          }
+        },
+        "OpvangLocatiesLijstCaseload (new_OpvangLocatiesLijstCaseload)": {
+          "defaultValue": "f8af2654-c608-410a-a94e-025832ecf605",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesLijstCaseload"
+          }
+        },
+        "OpvangLocatiesLijstNotes (new_OpvangLocatiesLijstNotes)": {
+          "defaultValue": "1462ce41-1576-4788-a2a1-2b387347462d",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesLijstNotes"
+          }
+        }
+      },
+      "triggers": {
+        "Recurrence": {
+          "recurrence": {
+            "frequency": "Week",
+            "interval": 1,
+            "timeZone": "W. Europe Standard Time",
+            "schedule": {
+              "weekDays": [
+                "Monday"
+              ],
+              "hours": [
+                "8"
+              ],
+              "minutes": [
+                0
+              ]
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "c57afbba-71c8-4ae7-9acf-fd40fdef9607"
+          },
+          "type": "Recurrence"
+        }
+      },
+      "actions": {
+        "Get_items_-_Caseload": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "bcc415ef-e523-4c04-b0df-426d96f94dfe"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetItems",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "@parameters('OpvangLocatiesSite (new_OpvangLocatiesSite)')",
+              "table": "@parameters('OpvangLocatiesLijstCaseload (new_OpvangLocatiesLijstCaseload)')",
+              "$filter": "Gearchiveerd eq 'Nee'"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Get_items_-_Notes": {
+          "runAfter": {
+            "Get_items_-_Caseload": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "026b370c-fc09-4cdf-8e80-49425379974a"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetItems",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "@parameters('OpvangLocatiesSite (new_OpvangLocatiesSite)')",
+              "table": "@parameters('OpvangLocatiesLijstNotes (new_OpvangLocatiesLijstNotes)')",
+              "$filter": "Created gt '@{formatDateTime(addDays(utcNow(),-90))}'",
+              "$orderby": "Created"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Filter_array_-_CaseloadGesprekInplannen": {
+          "runAfter": {
+            "Select_-_BewonersMetGesprek": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "56112104-dd06-466d-b507-c3b90451978d"
+          },
+          "type": "Query",
+          "inputs": {
+            "from": "@outputs('Get_items_-_Caseload')?['body/value']",
+            "where": "@not(contains(body('Select_-_BewonersMetGesprek'), string(item()?['ID'])))"
+          }
+        },
+        "Select_-_BewonersMetGesprek": {
+          "runAfter": {
+            "Get_items_-_Notes": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "81ae48cf-1594-4e2f-ae55-bd8c41abb260"
+          },
+          "type": "Select",
+          "inputs": {
+            "from": "@outputs('Get_items_-_Notes')?['body/value']",
+            "select": "@{item()?['BewonerID']}"
+          }
+        },
+        "Apply_to_each": {
+          "foreach": "@union(body('Select_-_CaseloadHouderEmail'),body('Select_-_CaseloadHouderEmail'))",
+          "actions": {
+            "CurrentCaseloadhouderEmail": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "202af965-3c9b-48ab-913a-92b42d9b2417"
+              },
+              "type": "Compose",
+              "inputs": "@item()"
+            },
+            "Filter_array_-_BewonerCaseloadHouder": {
+              "runAfter": {
+                "CurrentCaseloadhouderEmail": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "57942495-e301-4ca6-b45e-8f21642cc025"
+              },
+              "type": "Query",
+              "inputs": {
+                "from": "@body('Filter_array_-_CaseloadGesprekInplannen')",
+                "where": "@equals(item()?['Caseloadhouder/Email'], outputs('CurrentCaseloadhouderEmail'))"
+              }
+            },
+            "Create_HTML_table": {
+              "runAfter": {
+                "Select": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "00c1d907-dedd-41c7-a24d-7559ec680596"
+              },
+              "type": "Table",
+              "inputs": {
+                "from": "@body('Select')",
+                "format": "HTML"
+              }
+            },
+            "Select": {
+              "runAfter": {
+                "Filter_array_-_BewonerCaseloadHouder": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "a87bf137-092f-4687-a32f-c12aadde44cf"
+              },
+              "type": "Select",
+              "inputs": {
+                "from": "@body('Filter_array_-_BewonerCaseloadHouder')",
+                "select": {
+                  "Bewoner": "@item()['VolledigeNaam']",
+                  "Locatie": "@item()?['Locatie']",
+                  "Kamernummer": "@item()?['Kamernummer']"
+                }
+              }
+            },
+            "Send_an_email_(V2)": {
+              "runAfter": {
+                "CSS": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "379de301-0f94-4b4c-a1c1-f50dc09aa0c9"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_office365",
+                  "operationId": "SendEmailV2",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+                },
+                "parameters": {
+                  "emailMessage/To": "@outputs('CurrentCaseloadhouderEmail')",
+                  "emailMessage/Subject": "Opvanglocaties - In te plannen caseload gesprekken",
+                  "emailMessage/Body": "<p>Beste,<br>\n<br>\nZie onderstaande lijst van bewoners waarvoor het al 3 maand geleden is dat een caseloadgesprek ingepland is:<br>\n@{outputs('CSS')}<br>\n</p>",
+                  "emailMessage/Importance": "Normal"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            },
+            "CSS": {
+              "runAfter": {
+                "Create_HTML_table": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "88b7a99e-f319-475d-88f4-e3926924578b"
+              },
+              "type": "Compose",
+              "inputs": "<style>\ntable {\n  width: 75%;\n  text-align: left;\n  border-collapse: collapse;\n}\ntable td, table. th {\n  border: 1px solid #000000;\n  padding: 3px 2px;\n}\ntable tbody td {\n  font-size: 13px;\n  color: #000000;\n}\ntable thead {\n  background: #887439;\n}\ntable thead th {\n  font-size: 15px;\n  font-weight: bold;\n  color: #FFFFFF;\n  text-align: left;\n}\ntable tfoot td {\n  font-size: 14px;\n}\ntable tfoot .links {\n  text-align: right;\n}\ntable tfoot .links a{\n  display: inline-block;\n  background: #1C6EA4;\n  color: #FFFFFF;\n  padding: 2px 8px;\n  border-radius: 5px;\n}\n</style>\n@{replace(replace(replace(body('Create_HTML_table'), '&lt;', '<'), '&gt;', '>'), '&quot;', '\"')}"
+            }
+          },
+          "runAfter": {
+            "Select_-_CaseloadHouderEmail": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "83344c00-9039-4529-bd71-6b012c6a53c9"
+          },
+          "type": "Foreach"
+        },
+        "Select_-_CaseloadHouderEmail": {
+          "runAfter": {
+            "Filter_array_-_CaseloadGesprekInplannen": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b5cdd3c2-0fe3-4819-8fe4-0dc64f81f2fe"
+          },
+          "type": "Select",
+          "inputs": {
+            "from": "@body('Filter_array_-_CaseloadGesprekInplannen')",
+            "select": "@item()?['Caseloadhouder/Email']"
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

@@ -1,0 +1,178 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedsharepointonline_7cf8b"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "OpvangLocatiesSite (new_OpvangLocatiesSite)": {
+          "defaultValue": "https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_ACC_zspQYrr8MYeeVtURZe9i2McjFcRQvE",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesSite"
+          }
+        },
+        "OpvangLocatiesLijstCaseload (new_OpvangLocatiesLijstCaseload)": {
+          "defaultValue": "f8af2654-c608-410a-a94e-025832ecf605",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesLijstCaseload"
+          }
+        },
+        "OpvangLocatiesLijstRooms (new_OpvangLocatiesLijstRooms)": {
+          "defaultValue": "f72cc560-4a3e-4b86-b143-de4c76169d7c",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesLijstRooms"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "b2c2b9af-7ac1-4c37-ad3c-cb3f05680b11"
+          },
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      },
+      "actions": {
+        "Get_items_-_Kamers": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "09220f4f-015d-44d6-9eda-ccb160f54535"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetItems",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "@parameters('OpvangLocatiesSite (new_OpvangLocatiesSite)')",
+              "table": "@parameters('OpvangLocatiesLijstRooms (new_OpvangLocatiesLijstRooms)')"
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
+          }
+        },
+        "Apply_to_each": {
+          "foreach": "@outputs('Get_items_-_Kamers')?['body/value']",
+          "actions": {
+            "Get_items_-_Caseload": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "62d3dab9-1295-45f4-b29b-bb3c99fa7db9"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_sharepointonline",
+                  "operationId": "GetItems",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                },
+                "parameters": {
+                  "dataset": "@parameters('OpvangLocatiesSite (new_OpvangLocatiesSite)')",
+                  "table": "@parameters('OpvangLocatiesLijstCaseload (new_OpvangLocatiesLijstCaseload)')",
+                  "$filter": "Locatie eq '@{items('Apply_to_each')?['Locatie']}' and Kamernummer eq '@{items('Apply_to_each')?['Kamernummer']}' and Gearchiveerd eq 'Nee'"
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Update_item": {
+              "runAfter": {
+                "Compose": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "802ded0d-d1b1-4609-bcf7-7b9c2afa08f5"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_sharepointonline",
+                  "operationId": "PatchItem",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                },
+                "parameters": {
+                  "dataset": "@parameters('OpvangLocatiesSite (new_OpvangLocatiesSite)')",
+                  "table": "@parameters('OpvangLocatiesLijstRooms (new_OpvangLocatiesLijstRooms)')",
+                  "id": "@items('Apply_to_each')?['ID']",
+                  "item/Locatie": "@items('Apply_to_each')?['Locatie']",
+                  "item/Kamernummer": "@items('Apply_to_each')?['Kamernummer']",
+                  "item/AantalPersonen": "@items('Apply_to_each')?['AantalPersonen']",
+                  "item/AantalBezet": "@length(outputs('Get_items_-_Caseload')?['body/value'])",
+                  "item/Snijverlies": "@items('Apply_to_each')?['Snijverlies']"
+                },
+                "authentication": {
+                  "type": "Raw",
+                  "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+                }
+              }
+            },
+            "Compose": {
+              "runAfter": {
+                "Get_items_-_Caseload": [
+                  "Succeeded"
+                ]
+              },
+              "metadata": {
+                "operationMetadataId": "bb6ba8b2-e7a6-4c37-b5e5-10d540ab6ef6"
+              },
+              "type": "Compose",
+              "inputs": "@length(outputs('Get_items_-_Caseload')?['body/value'])"
+            }
+          },
+          "runAfter": {
+            "Get_items_-_Kamers": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b60975f9-5825-4683-adaf-3aec15dc7076"
+          },
+          "type": "Foreach",
+          "runtimeConfiguration": {
+            "concurrency": {
+              "repetitions": 5
+            }
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

@@ -1,0 +1,15 @@
+<environmentvariabledefinition schemaname="new_OpvangLocatiesLijstNotes">
+  <apiid>/providers/microsoft.powerapps/apis/shared_sharepointonline</apiid>
+  <displayname default="OpvangLocatiesLijstNotes">
+    <label description="OpvangLocatiesLijstNotes" languagecode="1043" />
+  </displayname>
+  <introducedversion>1.0.0.1</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <parameterkey>table</parameterkey>
+  <parentdefinitionid>
+    <schemaname>new_OpvangLocatiesSite</schemaname>
+  </parentdefinitionid>
+  <secretstore>0</secretstore>
+  <type>100000004</type>
+</environmentvariabledefinition>

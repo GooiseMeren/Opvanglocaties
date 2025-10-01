@@ -1,0 +1,18 @@
+<environmentvariabledefinition schemaname="new_OpvangLocatiesBestandenBibliotheek_DataSource">
+  <apiid>/providers/microsoft.powerapps/apis/shared_sharepointonline</apiid>
+  <description default="OpvangLocatiesBestandenBibliotheek">
+    <label description="OpvangLocatiesBestandenBibliotheek" languagecode="1043" />
+  </description>
+  <displayname default="OpvangLocatiesBestandenBibliotheek_DataSource">
+    <label description="OpvangLocatiesBestandenBibliotheek_DataSource" languagecode="1043" />
+  </displayname>
+  <introducedversion>1.0.0.23</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <parameterkey>table</parameterkey>
+  <parentdefinitionid>
+    <schemaname>new_OpvangLocatiesBestandenSite</schemaname>
+  </parentdefinitionid>
+  <secretstore>0</secretstore>
+  <type>100000004</type>
+</environmentvariabledefinition>

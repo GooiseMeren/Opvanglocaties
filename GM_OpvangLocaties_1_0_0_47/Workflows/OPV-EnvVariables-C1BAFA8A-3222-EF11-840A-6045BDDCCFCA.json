@@ -1,0 +1,179 @@
+{
+  "properties": {
+    "connectionReferences": {},
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "OpvangLocatiesRGB_R (new_OpvangLocatiesRGB_R)": {
+          "defaultValue": 245,
+          "type": "Int",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesRGB_R"
+          }
+        },
+        "OpvangLocatiesRGB_G (new_OpvangLocatiesRGB_G)": {
+          "defaultValue": 124,
+          "type": "Int",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesRGB_G"
+          }
+        },
+        "OpvangLocatiesRGB_B (new_OpvangLocatiesRGB_B)": {
+          "defaultValue": 115,
+          "type": "Int",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesRGB_B"
+          }
+        },
+        "OpvangLocatiesRGB_A (new_OpvangLocatiesRGB_A)": {
+          "defaultValue": 1,
+          "type": "Int",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesRGB_A"
+          }
+        },
+        "OpvangLocatiesNaamOmgeving (new_OpvangLocatiesNaamOmgeving)": {
+          "defaultValue": "Acc",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesNaamOmgeving"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "58b76dcf-5646-4065-bdcb-14f1b4633131"
+          },
+          "type": "Request",
+          "kind": "PowerAppV2",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      },
+      "actions": {
+        "R": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "e110e4af-7672-4845-9f57-6f668804b04a"
+          },
+          "type": "Compose",
+          "inputs": "@parameters('OpvangLocatiesRGB_R (new_OpvangLocatiesRGB_R)')"
+        },
+        "Respond_to_a_Power_App_or_flow": {
+          "runAfter": {
+            "EnvironmentLabel": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "7225dd6e-3bf5-4828-8377-18eb9ffe38e0"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "envvariablefill_r": "@{outputs('R')}",
+              "envvariablefill_g": "@{outputs('G')}",
+              "envvariablefill_b": "@{outputs('B')}",
+              "envvariablefill_a": "@{outputs('A')}",
+              "envlabel": "@{outputs('EnvironmentLabel')}"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "envvariablefill_r": {
+                  "title": "EnvVariableFill_R",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                },
+                "envvariablefill_g": {
+                  "title": "EnvVariableFill_G",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                },
+                "envvariablefill_b": {
+                  "title": "EnvVariableFill_B",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                },
+                "envvariablefill_a": {
+                  "title": "EnvVariableFill_A",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                },
+                "envlabel": {
+                  "title": "EnvLabel",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "G": {
+          "runAfter": {
+            "R": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "0e366cf3-14f3-4456-ba10-469ba8960f30"
+          },
+          "type": "Compose",
+          "inputs": "@parameters('OpvangLocatiesRGB_G (new_OpvangLocatiesRGB_G)')"
+        },
+        "B": {
+          "runAfter": {
+            "G": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "9073d63c-43ee-4b9a-9721-a6068b03d067"
+          },
+          "type": "Compose",
+          "inputs": "@parameters('OpvangLocatiesRGB_B (new_OpvangLocatiesRGB_B)')"
+        },
+        "A": {
+          "runAfter": {
+            "B": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "e0ed6529-444a-4504-90bb-df81890ce9b6"
+          },
+          "type": "Compose",
+          "inputs": "@parameters('OpvangLocatiesRGB_A (new_OpvangLocatiesRGB_A)')"
+        },
+        "EnvironmentLabel": {
+          "runAfter": {
+            "A": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "342026d5-da93-4089-b0ec-273d69303dd4"
+          },
+          "type": "Compose",
+          "inputs": "@parameters('OpvangLocatiesNaamOmgeving (new_OpvangLocatiesNaamOmgeving)')"
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}
