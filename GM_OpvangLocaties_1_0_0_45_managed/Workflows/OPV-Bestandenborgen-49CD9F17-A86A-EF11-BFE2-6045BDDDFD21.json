@@ -1,0 +1,239 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedsharepointonline_01b17"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "OpvangLocatiesBestandenSite (new_OpvangLocatiesBestandenSite)": {
+          "defaultValue": "https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_Prod_Documenten_d8tUHRFNiWQwJi4EwUuWTpM39dgkhL",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesBestandenSite",
+            "description": "OpvangLocatiesBestandenSite"
+          }
+        },
+        "OpvangLocatiesBestandenBibliotheekTekst (new_OpvangLocatiesBestandenBibliotheek)": {
+          "defaultValue": "/Documenten_ACC",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesBestandenBibliotheek"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "2ad8f844-2653-4608-bad2-eac32a9989c4"
+          },
+          "type": "Request",
+          "kind": "PowerAppV2",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "file": {
+                  "title": "File Content",
+                  "type": "object",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please select file or image",
+                  "x-ms-content-hint": "FILE",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "contentBytes": {
+                      "type": "string",
+                      "format": "byte"
+                    }
+                  }
+                },
+                "text": {
+                  "title": "Type",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_1": {
+                  "title": "BewonerID",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_2": {
+                  "title": "Bestandsnaam",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                },
+                "text_3": {
+                  "title": "Omschrijving",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                }
+              },
+              "required": [
+                "text",
+                "text_1",
+                "text_2",
+                "text_3"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Create_file": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "1df882ef-42f1-4467-945d-f259f10fdcea"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "CreateFile",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "@parameters('OpvangLocatiesBestandenSite (new_OpvangLocatiesBestandenSite)')",
+              "folderPath": "@parameters('OpvangLocatiesBestandenBibliotheekTekst (new_OpvangLocatiesBestandenBibliotheek)')",
+              "name": "@triggerBody()['file']['name']",
+              "body": "@triggerBody()?['file']?['contentBytes']"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runtimeConfiguration": {
+            "contentTransfer": {
+              "transferMode": "Chunked"
+            }
+          }
+        },
+        "Update_file_properties": {
+          "runAfter": {
+            "ITEM": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "7f63a47d-7aa7-4e77-9968-8f08b9d47a67"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "PatchFileItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "@parameters('OpvangLocatiesBestandenSite (new_OpvangLocatiesBestandenSite)')",
+              "table": "@substring(parameters('OpvangLocatiesBestandenBibliotheekTekst (new_OpvangLocatiesBestandenBibliotheek)'),1) ",
+              "id": "@outputs('Create_file')?['body/ItemId']",
+              "item": "@outputs('ITEM')"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Respond_to_a_Power_App_or_flow": {
+          "runAfter": {
+            "Update_file_properties": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "e7c146b7-b3c9-4d0f-a7f7-8ffc0d06a3cb"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "outputs": "Succes"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "outputs": {
+                  "title": "Outputs",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Respond_to_a_Power_App_or_flow_2": {
+          "runAfter": {
+            "Respond_to_a_Power_App_or_flow": [
+              "Failed",
+              "Skipped"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "994968a8-c12e-4c21-bf1a-9cc91723d552"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "outputs": "Failure"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "outputs": {
+                  "title": "Outputs",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "ITEM": {
+          "runAfter": {
+            "Create_file": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b9ffa67c-be39-41f0-8cf3-e721f7a59d21"
+          },
+          "type": "Compose",
+          "inputs": {
+            "Title": "@triggerBody()['text_2']",
+            "OData__Type": "@triggerBody()['text']",
+            "BewonerID": "@triggerBody()['text_1']",
+            "GM_Omschrijving": "@triggerBody()['text_3']"
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

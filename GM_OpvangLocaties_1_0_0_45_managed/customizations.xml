@@ -1,0 +1,265 @@
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.25082.158" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.25083.00168">
+  <Entities></Entities>
+  <Roles></Roles>
+  <Workflows>
+    <Workflow WorkflowId="{9b9a4a09-6629-ef11-840a-0022489b7f0d}" Name="OPV - ExportToExcel">
+      <JsonFileName>/Workflows/OPV-ExportToExcel-9B9A4A09-6629-EF11-840A-0022489B7F0D.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.9</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1043" description="OPV - ExportToExcel" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{c1bafa8a-3222-ef11-840a-6045bddccfca}" Name="OPV - EnvVariables">
+      <JsonFileName>/Workflows/OPV-EnvVariables-C1BAFA8A-3222-EF11-840A-6045BDDCCFCA.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.4</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1043" description="OPV - EnvVariables" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{49cd9f17-a86a-ef11-bfe2-6045bdddfd21}" Name="OPV - Bestanden borgen">
+      <JsonFileName>/Workflows/OPV-Bestandenborgen-49CD9F17-A86A-EF11-BFE2-6045BDDDFD21.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.20</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1043" description="OPV - Bestanden borgen" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{2fb3cd05-9f13-f011-998a-7c1e52769997}" Name="OPV - Jaarlijkse verlofdagen ophogen naar 28">
+      <JsonFileName>/Workflows/OPV-Jaarlijkseverlofdagenophogennaar28-2FB3CD05-9F13-F011-998A-7C1E52769997.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.37</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1043" description="OPV - Jaarlijkse verlofdagen ophogen naar 28" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{e6f29503-a513-f011-998a-7c1e52769997}" Name="OPV - Actie feitelijke terugkomst datum">
+      <JsonFileName>/Workflows/OPV-Actiefeitelijketerugkomstdatum-E6F29503-A513-F011-998A-7C1E52769997.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.37</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1043" description="OPV - Actie feitelijke terugkomst datum" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{6aa2d995-9f04-f011-bae3-7c1e52769997}" Name="OPV - Notificatie Caseload Gesprek">
+      <JsonFileName>/Workflows/OPV-NotificatieCaseloadGesprek-6AA2D995-9F04-F011-BAE3-7C1E52769997.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.36</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1043" description="OPV - Notificatie Caseload Gesprek" />
+      </LocalizedNames>
+    </Workflow>
+    <Workflow WorkflowId="{b4f2dbb3-f992-f011-b4cc-7c1e52fb5351}" Name="OPV - Bezetting herberekenen">
+      <JsonFileName>/Workflows/OPV-Bezettingherberekenen-B4F2DBB3-F992-F011-B4CC-7C1E52FB5351.json</JsonFileName>
+      <Type>1</Type>
+      <Subprocess>0</Subprocess>
+      <Category>5</Category>
+      <Mode>0</Mode>
+      <Scope>4</Scope>
+      <OnDemand>0</OnDemand>
+      <TriggerOnCreate>0</TriggerOnCreate>
+      <TriggerOnDelete>0</TriggerOnDelete>
+      <AsyncAutodelete>0</AsyncAutodelete>
+      <SyncWorkflowLogOnFailure>0</SyncWorkflowLogOnFailure>
+      <StateCode>1</StateCode>
+      <StatusCode>2</StatusCode>
+      <RunAs>1</RunAs>
+      <IsTransacted>1</IsTransacted>
+      <IntroducedVersion>1.0.0.44</IntroducedVersion>
+      <IsCustomizable>1</IsCustomizable>
+      <BusinessProcessType>0</BusinessProcessType>
+      <IsCustomProcessingStepAllowedForOtherPublishers>1</IsCustomProcessingStepAllowedForOtherPublishers>
+      <ModernFlowType>0</ModernFlowType>
+      <PrimaryEntity>none</PrimaryEntity>
+      <LocalizedNames>
+        <LocalizedName languagecode="1043" description="OPV - Bezetting herberekenen" />
+      </LocalizedNames>
+    </Workflow>
+  </Workflows>
+  <FieldSecurityProfiles></FieldSecurityProfiles>
+  <Templates />
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
+  <optionsets />
+  <CustomControls />
+  <EntityDataProviders />
+  <CanvasApps>
+    <CanvasApp>
+      <Name>new_opvanglocatiesgooisemeren_43f9f</Name>
+      <AppVersion>2025-09-08T06:08:45Z</AppVersion>
+      <Status>Ready</Status>
+      <CreatedByClientVersion>3.25084.7.0</CreatedByClientVersion>
+      <MinClientVersion>3.25084.7.0</MinClientVersion>
+      <Tags>{"primaryDeviceWidth":"1366","primaryDeviceHeight":"768","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.25084.7","minimumRequiredApiVersion":"2.2.0","hasComponent":"true","hasUnlockedComponent":"true","isUnifiedRootApp":"false","sienaVersion":"20250827T064301Z-3.25082.8.0"}</Tags>
+      <IsCdsUpgraded>0</IsCdsUpgraded>
+      <GalleryItemId xsi:nil="true"></GalleryItemId>
+      <BackgroundColor>rgba(9, 33, 98, 1)</BackgroundColor>
+      <DisplayName>Opvanglocaties Gooise Meren</DisplayName>
+      <Description>V2.0</Description>
+      <CommitMessage xsi:nil="true"></CommitMessage>
+      <Publisher></Publisher>
+      <AuthorizationReferences>[]</AuthorizationReferences>
+      <ConnectionReferences>{"2c1c9b61-1b4a-4c87-ac4e-8c79997b19a9":{"id":"/providers/microsoft.powerapps/apis/shared_sharepointonline","displayName":"SharePoint","iconUri":"https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/v1.0.1762/1.0.1762.4298/sharepointonline/icon.png","dataSources":["School_1","OpvangLocatiesLijstCaseload","OpvangLocatiesLijstChoices","OpvangLocatiesLijstDoctor","OpvangLocatiesLijstFamily","OpvangLocatiesLijstLocation","OpvangLocatiesLijstRooms","OpvangLocatiesLijstSchool","OpvangLocatiesLijstActions","OpvangLocatiesLijstBewonersBekeken","OpvangLocatiesLijstNotes","OpvangLocatiesLijstPharmacy","OpvangLocatiesBestandenBibliotheek_DataSource","OpvangLocatiesLijstVerlof"],"dependencies":[],"dependents":["67500025-5966-4ae5-a273-07e2be4c4ba9","fbb24988-7705-4c76-8b4d-e0bb8214e659"],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{"https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_ACC_zspQYrr8MYeeVtURZe9i2McjFcRQvE":{"dataSources":{"School_1":{"tableName":"68542d4b-d47d-4270-bbce-cb1147eb6823"}}},"https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_ACC_zspQYrr8MYeeVtURZe9i2McjFcRQvE_new_OpvangLocatiesSite":{"datasetOverride":{"name":"https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_ACC_zspQYrr8MYeeVtURZe9i2McjFcRQvE","environmentVariableName":"new_OpvangLocatiesSite"},"dataSources":{"OpvangLocatiesLijstCaseload":{"tableName":"f8af2654-c608-410a-a94e-025832ecf605","tableNameOverride":{"name":"f8af2654-c608-410a-a94e-025832ecf605","environmentVariableName":"new_OpvangLocatiesLijstCaseload"}},"OpvangLocatiesLijstChoices":{"tableName":"0630d5e8-701a-4eef-9141-161f491db7e7","tableNameOverride":{"name":"0630d5e8-701a-4eef-9141-161f491db7e7","environmentVariableName":"new_OpvangLocatiesLijstChoices"}},"OpvangLocatiesLijstDoctor":{"tableName":"e614e8a8-ecc4-42ad-a08d-f31a64d690ab","tableNameOverride":{"name":"e614e8a8-ecc4-42ad-a08d-f31a64d690ab","environmentVariableName":"new_OpvangLocatiesLijstDoctor"}},"OpvangLocatiesLijstFamily":{"tableName":"14ec3826-2710-4ad3-b0e6-68b348ffd0ef","tableNameOverride":{"name":"14ec3826-2710-4ad3-b0e6-68b348ffd0ef","environmentVariableName":"new_OpvangLocatiesLijstFamily"}},"OpvangLocatiesLijstLocation":{"tableName":"2a25e7f7-22af-49cb-b60d-153c72ebcb0a","tableNameOverride":{"name":"2a25e7f7-22af-49cb-b60d-153c72ebcb0a","environmentVariableName":"new_OpvangLocatiesLijstLocation"}},"OpvangLocatiesLijstRooms":{"tableName":"f72cc560-4a3e-4b86-b143-de4c76169d7c","tableNameOverride":{"name":"f72cc560-4a3e-4b86-b143-de4c76169d7c","environmentVariableName":"new_OpvangLocatiesLijstRooms"}},"OpvangLocatiesLijstSchool":{"tableName":"68542d4b-d47d-4270-bbce-cb1147eb6823","tableNameOverride":{"name":"68542d4b-d47d-4270-bbce-cb1147eb6823","environmentVariableName":"new_OpvangLocatiesLijstSchool"}},"OpvangLocatiesLijstActions":{"tableName":"1394b78e-0136-4c60-bddd-9512e9dbd0ba","tableNameOverride":{"name":"1394b78e-0136-4c60-bddd-9512e9dbd0ba","environmentVariableName":"new_OpvangLocatiesLijstActies"}},"OpvangLocatiesLijstBewonersBekeken":{"tableName":"0f4906d4-ff5c-4fbe-899c-b3fc5620e2d4","tableNameOverride":{"name":"0f4906d4-ff5c-4fbe-899c-b3fc5620e2d4","environmentVariableName":"new_OpvangLocatiesLijstBewonersBekeken"}},"OpvangLocatiesLijstNotes":{"tableName":"1462ce41-1576-4788-a2a1-2b387347462d","tableNameOverride":{"name":"1462ce41-1576-4788-a2a1-2b387347462d","environmentVariableName":"new_OpvangLocatiesLijstNotes"}},"OpvangLocatiesLijstPharmacy":{"tableName":"7a8fa663-b005-4dc3-845c-6fb0fb5bd150","tableNameOverride":{"name":"7a8fa663-b005-4dc3-845c-6fb0fb5bd150","environmentVariableName":"new_OpvangLocatiesLijstPharmacy"}},"OpvangLocatiesLijstVerlof":{"tableName":"f00f3920-394f-478c-be42-ee1fc7e50716","tableNameOverride":{"name":"f00f3920-394f-478c-be42-ee1fc7e50716","environmentVariableName":"new_OpvangLocatiesLijstVerlof"}}}},"https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_Prod_Documenten_d8tUHRFNiWQwJi4EwUuWTpM39dgkhL_new_OpvangLocatiesBestandenSite":{"datasetOverride":{"name":"https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_Prod_Documenten_d8tUHRFNiWQwJi4EwUuWTpM39dgkhL","environmentVariableName":"new_OpvangLocatiesBestandenSite"},"dataSources":{"OpvangLocatiesBestandenBibliotheek_DataSource":{"tableName":"aa4b86f6-f05c-490b-bfc6-4c39d0f6f1a5","tableNameOverride":{"name":"aa4b86f6-f05c-490b-bfc6-4c39d0f6f1a5","environmentVariableName":"new_OpvangLocatiesBestandenBibliotheek_DataSource"}}}}},"apiTier":"Standard","actions":["providers/PowerPlatform.Governance/Operations/Read","providers/PowerPlatform.Governance/Operations/Write","providers/PowerPlatform.Governance/Operations/Delete"]},"ba7049b2-addb-4603-8fdf-3eccc977e033":{"id":"/providers/microsoft.powerapps/apis/shared_office365groups","displayName":"Office 365 Groups","iconUri":"https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/1759/1.0.1759.4274/office365groups/icon.png","dataSources":["Office365Groups"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{},"apiTier":"Standard","actions":["ListGroupMembers"]},"a2d33187-3bb2-49a1-9812-aae3f515c03e":{"id":"/providers/microsoft.powerapps/apis/shared_office365users","displayName":"Office 365 Users","iconUri":"https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/v1.0.1767/1.0.1767.4341/office365users/icon.png","dataSources":["Office365Users"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{},"apiTier":"Standard","actions":["SearchUser"]},"67500025-5966-4ae5-a273-07e2be4c4ba9":{"id":"/providers/microsoft.powerapps/apis/shared_logicflows","displayName":"Logic flows","iconUri":"https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/v1.0.1766/1.0.1766.4330/logicflows/icon.png","dataSources":["ExportToExcel"],"dependencies":["e20cec4a-ad6c-4dca-b42c-fd3de372a0cf","2c1c9b61-1b4a-4c87-ac4e-8c79997b19a9"],"dependents":[],"parameterHints":{"workflowName":{"value":"64f95136-77d5-4aa1-8cd3-f82c9ffa2236"},"workflowEntityId":{"value":"9b9a4a09-6629-ef11-840a-0022489b7f0d"},"workflowDisplayName":{"value":"ExportToExcel"},"e20cec4a-ad6c-4dca-b42c-fd3de372a0cf":{"value":"shared_onedriveforbusiness"},"2c1c9b61-1b4a-4c87-ac4e-8c79997b19a9":{"value":"shared_sharepointonline_1"}},"parameterHintsV2":{"workflowName":{"value":"64f95136-77d5-4aa1-8cd3-f82c9ffa2236"},"workflowEntityId":{"value":"9b9a4a09-6629-ef11-840a-0022489b7f0d"},"workflowDisplayName":{"value":"ExportToExcel"},"shared_onedriveforbusiness":{"value":"e20cec4a-ad6c-4dca-b42c-fd3de372a0cf"},"shared_sharepointonline_1":{"value":"2c1c9b61-1b4a-4c87-ac4e-8c79997b19a9"}},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{},"apiTier":"Standard","actions":["Run"]},"e20cec4a-ad6c-4dca-b42c-fd3de372a0cf":{"id":"/providers/microsoft.powerapps/apis/shared_onedriveforbusiness","displayName":"OneDrive for Business","iconUri":"https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/v1.0.1763/1.0.1763.4307/onedriveforbusiness/icon.png","dataSources":[],"dependencies":[],"dependents":["67500025-5966-4ae5-a273-07e2be4c4ba9"],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{},"apiTier":"Standard"},"fbb24988-7705-4c76-8b4d-e0bb8214e659":{"id":"/providers/microsoft.powerapps/apis/shared_logicflows","displayName":"Logic flows","iconUri":"https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/v1.0.1766/1.0.1766.4330/logicflows/icon.png","dataSources":["OPV-Bestandenborgen"],"dependencies":["2c1c9b61-1b4a-4c87-ac4e-8c79997b19a9"],"dependents":[],"parameterHints":{"workflowName":{"value":"6f854ec2-36fa-4994-a7ff-c6b7ce60afc5"},"workflowEntityId":{"value":"49cd9f17-a86a-ef11-bfe2-6045bdddfd21"},"workflowDisplayName":{"value":"OPV - Bestanden borgen"},"2c1c9b61-1b4a-4c87-ac4e-8c79997b19a9":{"value":"shared_sharepointonline"}},"parameterHintsV2":{"workflowName":{"value":"6f854ec2-36fa-4994-a7ff-c6b7ce60afc5"},"workflowEntityId":{"value":"49cd9f17-a86a-ef11-bfe2-6045bdddfd21"},"workflowDisplayName":{"value":"OPV - Bestanden borgen"},"shared_sharepointonline":{"value":"2c1c9b61-1b4a-4c87-ac4e-8c79997b19a9"}},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{},"apiTier":"Standard","actions":["Run"]},"4e694add-ead1-4a6c-bcc9-f3feb20ac22c":{"id":"/providers/microsoft.powerapps/apis/shared_logicflows","displayName":"Logic flows","iconUri":"https://conn-afd-prod-endpoint-bmc9bqahasf3grgk.b01.azurefd.net/v1.0.1766/1.0.1766.4330/logicflows/icon.png","dataSources":["OpvanglocatiesEnvVariables"],"dependencies":[],"dependents":[],"parameterHints":{"workflowName":{"value":"593b9dbb-1506-443a-a986-f93d90a59237"},"workflowEntityId":{"value":"c1bafa8a-3222-ef11-840a-6045bddccfca"},"workflowDisplayName":{"value":"OpvanglocatiesEnvVariables"}},"parameterHintsV2":{"workflowName":{"value":"593b9dbb-1506-443a-a986-f93d90a59237"},"workflowEntityId":{"value":"c1bafa8a-3222-ef11-840a-6045bddccfca"},"workflowDisplayName":{"value":"OpvanglocatiesEnvVariables"}},"isOnPremiseConnection":false,"bypassConsent":true,"dataSets":{},"apiTier":"Standard","actions":["Run"]}}</ConnectionReferences>
+      <DatabaseReferences>{}</DatabaseReferences>
+      <AppComponents>[]</AppComponents>
+      <AppComponentDependencies>[]</AppComponentDependencies>
+      <CanConsumeAppPass>1</CanConsumeAppPass>
+      <CanvasAppType>0</CanvasAppType>
+      <BypassConsent>1</BypassConsent>
+      <AdminControlBypassConsent>0</AdminControlBypassConsent>
+      <EmbeddedApp xsi:nil="true"></EmbeddedApp>
+      <IntroducedVersion>1.0</IntroducedVersion>
+      <CdsDependencies>{"cdsdependencies":[{"dependencyid":"9b9a4a09-6629-ef11-840a-0022489b7f0d","componenttype":29,"componenttypeplatformname":"Workflow"},{"dependencyid":"49cd9f17-a86a-ef11-bfe2-6045bdddfd21","componenttype":29,"componenttypeplatformname":"Workflow"},{"dependencyid":"c1bafa8a-3222-ef11-840a-6045bddccfca","componenttype":29,"componenttypeplatformname":"Workflow"},{"logicalname":"new_OpvangLocatiesSite","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesBestandenSite","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstCaseload","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstChoices","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstDoctor","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstFamily","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstLocation","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstRooms","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstSchool","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstActies","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstBewonersBekeken","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstNotes","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstPharmacy","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesLijstVerlof","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"new_OpvangLocatiesBestandenBibliotheek_DataSource","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"}]}</CdsDependencies>
+      <IsCustomizable>1</IsCustomizable>
+      <BackgroundImageUri>/CanvasApps/new_opvanglocatiesgooisemeren_43f9f_BackgroundImageUri</BackgroundImageUri>
+      <DocumentUri>/CanvasApps/new_opvanglocatiesgooisemeren_43f9f_DocumentUri.msapp</DocumentUri>
+      <AdditionalUris>
+        <AdditionalUri>/CanvasApps/new_opvanglocatiesgooisemeren_43f9f_AdditionalUris0_identity.json</AdditionalUri>
+      </AdditionalUris>
+    </CanvasApp>
+  </CanvasApps>
+  <connectionreferences>
+    <connectionreference connectionreferencelogicalname="new_sharedoffice365_d3d2f">
+      <connectionreferencedisplayname>Office 365 Outlook</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_office365</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="new_sharedonedriveforbusiness_f2b9d">
+      <connectionreferencedisplayname>OneDrive for Business GM_OpvangLocaties-f2b9d</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_onedriveforbusiness</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="new_sharedsharepointonline_01b17">
+      <connectionreferencedisplayname>SharePoint GM_OpvangLocaties-01b17</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_sharepointonline</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="new_sharedsharepointonline_7cf8b">
+      <connectionreferencedisplayname>SharePoint GM_projecten-7cf8b</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_sharepointonline</connectorid>
+      <iscustomizable>1</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+  </connectionreferences>
+  <Languages>
+    <Language>1043</Language>
+  </Languages>
+</ImportExportXml>

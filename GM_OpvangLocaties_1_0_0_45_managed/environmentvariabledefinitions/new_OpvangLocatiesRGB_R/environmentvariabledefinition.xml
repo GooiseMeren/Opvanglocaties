@@ -1,0 +1,11 @@
+<environmentvariabledefinition schemaname="new_OpvangLocatiesRGB_R">
+  <defaultvalue>0</defaultvalue>
+  <displayname default="OpvangLocatiesRGB_R">
+    <label description="OpvangLocatiesRGB_R" languagecode="1043" />
+  </displayname>
+  <introducedversion>1.0.0.4</introducedversion>
+  <iscustomizable>1</iscustomizable>
+  <isrequired>0</isrequired>
+  <secretstore>0</secretstore>
+  <type>100000001</type>
+</environmentvariabledefinition>

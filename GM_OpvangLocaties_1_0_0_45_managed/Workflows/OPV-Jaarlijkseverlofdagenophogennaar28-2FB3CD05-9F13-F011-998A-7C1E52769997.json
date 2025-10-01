@@ -1,0 +1,119 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline": {
+        "api": {
+          "name": "shared_sharepointonline"
+        },
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedsharepointonline_7cf8b"
+        },
+        "runtimeSource": "embedded"
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "OpvangLocatiesSite (new_OpvangLocatiesSite)": {
+          "defaultValue": "https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_ACC_zspQYrr8MYeeVtURZe9i2McjFcRQvE",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesSite"
+          }
+        },
+        "OpvangLocatiesLijstCaseload (new_OpvangLocatiesLijstCaseload)": {
+          "defaultValue": "f8af2654-c608-410a-a94e-025832ecf605",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesLijstCaseload"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {},
+              "required": []
+            }
+          }
+        }
+      },
+      "actions": {
+        "Get_items": {
+          "type": "OpenApiConnection",
+          "inputs": {
+            "parameters": {
+              "dataset": "@parameters('OpvangLocatiesSite (new_OpvangLocatiesSite)')",
+              "table": "@parameters('OpvangLocatiesLijstCaseload (new_OpvangLocatiesLijstCaseload)')",
+              "$filter": "Gearchiveerd eq 'Nee'"
+            },
+            "host": {
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+              "operationId": "GetItems",
+              "connectionName": "shared_sharepointonline"
+            }
+          },
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "f2c00933-a2ec-4418-996d-471777ba53ee"
+          }
+        },
+        "Apply_to_each": {
+          "type": "Foreach",
+          "foreach": "@outputs('Get_items')?['body/value']",
+          "actions": {
+            "Update_item": {
+              "type": "OpenApiConnection",
+              "inputs": {
+                "parameters": {
+                  "dataset": "@parameters('OpvangLocatiesSite (new_OpvangLocatiesSite)')",
+                  "table": "@parameters('OpvangLocatiesLijstCaseload (new_OpvangLocatiesLijstCaseload)')",
+                  "id": "@items('Apply_to_each')?['ID']",
+                  "item/Gearchiveerd": "@items('Apply_to_each')?['Gearchiveerd']",
+                  "item/MoetAlleenWonen": "@items('Apply_to_each')?['MoetAlleenWonen']",
+                  "item/VerlofDagen": 28
+                },
+                "host": {
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+                  "operationId": "PatchItem",
+                  "connectionName": "shared_sharepointonline"
+                }
+              },
+              "metadata": {
+                "operationMetadataId": "31bfb54d-b1c2-4b47-af11-4a3911ed11d4"
+              }
+            }
+          },
+          "runAfter": {
+            "Get_items": [
+              "Succeeded"
+            ]
+          },
+          "runtimeConfiguration": {
+            "concurrency": {
+              "repetitions": 20
+            }
+          },
+          "metadata": {
+            "operationMetadataId": "34d5bcba-80b6-405d-a1d4-d482de30555c"
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}

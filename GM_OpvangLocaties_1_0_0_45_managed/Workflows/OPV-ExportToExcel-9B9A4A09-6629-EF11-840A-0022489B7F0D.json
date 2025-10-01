@@ -1,0 +1,325 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_onedriveforbusiness": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedonedriveforbusiness_f2b9d"
+        },
+        "api": {
+          "name": "shared_onedriveforbusiness"
+        }
+      },
+      "shared_sharepointonline_1": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedsharepointonline_01b17"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        },
+        "OpvangLocatiesSite (new_OpvangLocatiesSite)": {
+          "defaultValue": "https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_ACC_zspQYrr8MYeeVtURZe9i2McjFcRQvE",
+          "type": "String",
+          "metadata": {
+            "schemaName": "new_OpvangLocatiesSite"
+          }
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "b384837d-ce98-47d5-90fc-915b4ac338e7"
+          },
+          "type": "Request",
+          "kind": "PowerAppV2",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "Content",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                }
+              },
+              "required": [
+                "text"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Content": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "0713076a-44b1-402b-ae8a-b1ecc65333f7"
+          },
+          "type": "Compose",
+          "inputs": "@triggerBody()['text']"
+        },
+        "Create_HTML_table": {
+          "runAfter": {
+            "CSS": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "d593758c-8d2b-46e6-aa7c-d6b360dacc48"
+          },
+          "type": "Table",
+          "inputs": {
+            "from": "@body('Parse_JSON')",
+            "format": "HTML",
+            "columns": [
+              {
+                "header": "Kamer",
+                "value": "@item()['Kamer']"
+              },
+              {
+                "header": "M/V",
+                "value": "@item()['Geslacht']"
+              },
+              {
+                "header": "Naam",
+                "value": "@item()['Naam']"
+              },
+              {
+                "header": "Leeftijd",
+                "value": "@item()['Leeftijd']"
+              },
+              {
+                "header": "Geboortedatum",
+                "value": "@item()['Geboortedatum']"
+              }
+            ]
+          }
+        },
+        "Create_file": {
+          "runAfter": {
+            "Create_HTML_table": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "70bc72ae-0752-4811-9314-ee193b4e9580"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_onedriveforbusiness",
+              "operationId": "CreateFile",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_onedriveforbusiness"
+            },
+            "parameters": {
+              "folderPath": "/OpvanglocatiesExport",
+              "name": "convertedfile.html",
+              "body": "@{outputs('CSS')}@{body('Create_HTML_table')}"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runtimeConfiguration": {
+            "contentTransfer": {
+              "transferMode": "Chunked"
+            }
+          }
+        },
+        "Convert_file": {
+          "runAfter": {
+            "Create_file": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "15ebd404-091d-4865-ba76-169604bbfefe"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_onedriveforbusiness",
+              "operationId": "ConvertFile",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_onedriveforbusiness"
+            },
+            "parameters": {
+              "id": "@outputs('Create_file')?['body/FileLocator']",
+              "type": "PDF"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Create_file_2": {
+          "runAfter": {
+            "Convert_file": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "16dbe52f-d5ad-405e-8849-fac6485b03f9"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_onedriveforbusiness",
+              "operationId": "CreateFile",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_onedriveforbusiness"
+            },
+            "parameters": {
+              "folderPath": "/OpvanglocatiesExport",
+              "name": "Export-@{guid()}.pdf",
+              "body": "@body('Convert_file')"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runtimeConfiguration": {
+            "contentTransfer": {
+              "transferMode": "Chunked"
+            }
+          }
+        },
+        "Respond_to_a_Power_App_or_flow": {
+          "runAfter": {
+            "Create_file_3": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "51f2c430-a899-451c-a8f7-0bd8e24911b9"
+          },
+          "type": "Response",
+          "kind": "PowerApp",
+          "inputs": {
+            "statusCode": 200,
+            "body": {
+              "filelink": "https://gemgooisemeren.sharepoint.com/sites/App_Opvanglocaties_ACC_zspQYrr8MYeeVtURZe9i2McjFcRQvE/@{outputs('Create_file_3')?['body/Path']}?download=1"
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+                "filelink": {
+                  "title": "filelink",
+                  "x-ms-dynamically-added": true,
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Delete_file": {
+          "runAfter": {
+            "Delay": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "5fcdc4a8-6b68-4297-819b-1bc16d612520"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_onedriveforbusiness",
+              "operationId": "DeleteFile",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_onedriveforbusiness"
+            },
+            "parameters": {
+              "id": "@outputs('Create_file_2')?['body/Id']"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Delay": {
+          "runAfter": {
+            "Respond_to_a_Power_App_or_flow": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "6634d324-6b37-4cb1-aa55-724b51553c17"
+          },
+          "type": "Wait",
+          "inputs": {
+            "interval": {
+              "count": 5,
+              "unit": "Second"
+            }
+          }
+        },
+        "Parse_JSON": {
+          "runAfter": {
+            "Content": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "fb26401f-689e-4ffd-8cef-20380d40694d"
+          },
+          "type": "ParseJson",
+          "inputs": {
+            "content": "@outputs('Content')",
+            "schema": {}
+          }
+        },
+        "CSS": {
+          "runAfter": {
+            "Parse_JSON": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "960a7f2f-9e94-4364-bdae-aaf06788c213"
+          },
+          "type": "Compose",
+          "inputs": "<style>\nTable {\n  font-family: Arial, Helvetica, sans-serif;\n  background-color: #ffffff;\n  border-collapse: collapse;\n  width: 100%;\n}\n\nTable td, Table th {\n  border: 1px solid #ddd;\n  padding: 3px 3px;\n}\n\nTable th {\n  font-size: 15px;\n  font-weight: bold;\n  padding-top: 12px;\n  padding-bottom: 12px;\n  text-align: left;\n  background-color: #887439;\n  color: white;\n}\n</style>"
+        },
+        "Create_file_3": {
+          "runAfter": {
+            "Create_file_2": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "7de2b6fe-2a23-4fb1-818c-cb484a2d52d5"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline_1",
+              "operationId": "CreateFile",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "@parameters('OpvangLocatiesSite (new_OpvangLocatiesSite)')",
+              "folderPath": "/Gedeelde documenten",
+              "name": "Export-@{guid()}.pdf",
+              "body": "@body('Convert_file')"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runtimeConfiguration": {
+            "contentTransfer": {
+              "transferMode": "Chunked"
+            }
+          }
+        }
+      }
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}
