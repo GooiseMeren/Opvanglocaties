@@ -11,3 +11,5 @@ Er zijn twee versies van de MS PowerApp:
 
 In Stappenplan_Uitrol_OpvanglocatieApp.docx is te vinden hoe de PowerApp geinstalleerd moet worden binnen de omgeving.
 Op dit moment is de app nog op basis van SharePoint lijsten opgebouwd.
+
+Demo van de App: https://vimeo.com/1136101565
